@@ -1,50 +1,32 @@
-# Architecture Specification — atc-game
+# ARCHITECTURE.md — atc-game
 
-## Overview
-`atc-game` is designed as a core module in **L8 — Game** of the A-TownChain architecture.
+> Copyright © Michael Wroblewski / A-TownChain-Okosystems. All Rights Reserved.
 
-## Repository Metadata
-- **Repository Name**: `atc-game`
-- **Title**: Game Engine
-- **Layer**: L8 — Game
-- **Sprint**: 3.2
-- **ATC Standard**: ATC-90
-- **Primary Specification**: Game Engine — Battle System, Characters, Anti-Cheat, Timeline, Quests
-
-## Directory Structure
-
-```text
+## File Tree
+```tree
 atc-game/
-├── battle/
-│   └── battle_system.atc
-├── character/
-│   └── character_engine.atc
-├── security/
-│   └── anticheat.atc
-├── timeline/
-│   └── timeline_engine.atc
-├── quests/
-│   └── quest_system.atc
-├── physics/
-│   └── game_physics.atc
-├── README.md
-├── ARCHITECTURE.md
-├── COMPONENT_PLAN.md
-├── FILE_REGISTER.md
-├── STATUS.md
-├── ROADMAP.md
-├── CHANGELOG.md
-├── .gitignore
-└── LICENSE
+├── Cargo.toml — Game engine framework manifest
+├── .gitignore — Git ignore configuration
+└── src/
+    ├── lib.rs — Game framework library root
+    ├── engine.rs — Real-time game loop, tick manager, and render hooks
+    ├── state.rs — Deterministic game state sync and state hash verification
+    ├── assets.rs — Asset loader and on-chain NFT item binding interface
+    ├── matchmaking.rs — Peer-to-peer player matchmaking and lobby session manager
+    └── reward.rs — Play-to-earn token reward calculation and distribution system
 ```
 
-## Component Architecture Table
+## Module Descriptions
+- src/lib.rs — Entry point for game developers integrating with A-TownChain game protocol.
+- src/engine.rs — Drives real-time game loop ticks, state transitions, and frame callbacks.
+- src/state.rs — Guarantees cross-player deterministic state execution and state root hash validation.
+- src/assets.rs — Connects game assets directly to `atc-assets` on-chain NFTs.
+- src/matchmaking.rs — Coordinates peer-to-peer player matching based on rating and latency.
+- src/reward.rs — Calculates and releases verified on-chain token rewards based on game match outcomes.
 
-| Directory | File | Module Name | Primary Responsibility |
-| --- | --- | --- | --- |
-| `battle/` | `battle_system.atc` | `battle_system` | Battle System — Turn-based, stats, damage, abilities, loot |
-| `character/` | `character_engine.atc` | `character_engine` | Character Engine — Bio, stats, progression, inventory |
-| `security/` | `anticheat.atc` | `anticheat` | Anti-Cheat — Move validation, replay detection, stat checks |
-| `timeline/` | `timeline_engine.atc` | `timeline_engine` | Timeline Engine — Events, triggers, story progression |
-| `quests/` | `quest_system.atc` | `quest_system` | Quest System — Quest generation, tracking, rewards |
-| `physics/` | `game_physics.atc` | `game_physics` | Game Physics — Collision, gravity, movement, zones |
+## Build System
+- Cargo.toml — Standard Rust `std` game engine framework crate.
+
+## Dependencies
+- serde — Game state and protocol message serialization.
+- rand — Deterministic pseudo-randomness for game mechanics.
